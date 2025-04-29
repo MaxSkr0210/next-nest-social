@@ -21,6 +21,7 @@ lerna-debug.log*
 
 # IDEs and editors
 .idea
+social-frontend/idea
 .project
 .classpath
 .c9/
@@ -57,4 +58,3 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 data
 pgdata
-.idea
