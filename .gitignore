@@ -21,7 +21,6 @@ lerna-debug.log*
 
 # IDEs and editors
 .idea
-social-frontend/idea
 .project
 .classpath
 .c9/
