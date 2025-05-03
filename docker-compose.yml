@@ -1,6 +1,8 @@
+version: '3.8'
+
 services:
   rabbitmq:
-    image: rabbitmq:latest
+    image: rabbitmq:3-management
     container_name: rabbitmq
     restart: always
     ports:
@@ -9,12 +11,10 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: kalo
       RABBITMQ_DEFAULT_PASS: kalo
-    configs:
-      - source: rabbitmq-plugins
-        target: /etc/rabbitmq/enabled_plugins
     volumes:
       - rabbitmq-lib:/var/lib/rabbitmq/
       - rabbitmq-log:/var/log/rabbitmq
+
   postgres:
     image: postgres:latest
     container_name: postgres_container
@@ -27,10 +27,6 @@ services:
       - "5430:5432"
     volumes:
       - ./pgdata:/var/lib/postgresql/data/pgdata
-
-configs:
-  rabbitmq-plugins:
-    content: "[rabbitmq_management]."
 
 volumes:
   rabbitmq-lib:
