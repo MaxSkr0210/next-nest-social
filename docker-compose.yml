@@ -1,0 +1,96 @@
+version: '3.8'
+
+name: social-network
+
+services:
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: kalo
+      RABBITMQ_DEFAULT_PASS: kalo
+    configs:
+      - source: rabbitmq-plugins
+        target: /etc/rabbitmq/enabled_plugins
+    volumes:
+      - rabbitmq-lib:/var/lib/rabbitmq/
+      - rabbitmq-log:/var/log/rabbitmq
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: postgres_user
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_DB: postgres_db
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5430:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data/pgdata
+#  api-gateway:
+#    build: ./back/gateway
+#    ports:
+#      - '3000:3000'
+#    depends_on:
+#      - rabbitmq
+#      - postgres
+#    env_file: ./back/gateway/.env
+#    develop:
+#      watch:
+#        - action: rebuild
+#          path: ./back/gateway/src
+#          target: /app/src
+#  user-service:
+#    build: ./back/users
+#    depends_on:
+#      - rabbitmq
+#      - postgres
+#    env_file: ./back/users/.env
+#    develop:
+#      watch:
+#        - action: rebuild
+#          path: ./users/src
+#          target: /app/src
+#  auth-service:
+#    build: ./back/auth
+#    depends_on:
+#      - rabbitmq
+#      - postgres
+#    env_file: ./back/auth/.env
+#    develop:
+#      watch:
+#        - action: rebuild
+#          path: ./auth/src
+#          target: /app/src
+#  frontend-service:
+#    build: ./social-frontend
+#    ports:
+#      - '3001:3001'
+#    depends_on:
+#      - rabbitmq
+#      - postgres
+#      - api-gateway
+#      - auth-service
+#      - user-service
+#    env_file: ./social-frontend/.env
+#    develop:
+#      watch:
+#        - action: rebuild
+#          path: ./social-frontend/src
+#          target: /app/src
+
+configs:
+  rabbitmq-plugins:
+    content: "[rabbitmq_management]."
+
+volumes:
+  rabbitmq-lib:
+    driver: local
+  rabbitmq-log:
+    driver: local
+  pgdata:
+    driver: local
