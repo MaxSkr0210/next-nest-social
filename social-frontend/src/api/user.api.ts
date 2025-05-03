@@ -1,8 +1,9 @@
 import { HttpInstanceFactory } from '@/utils/HttpInstanceFactory';
+import { AxiosInstance } from 'axios';
 
 export class UserApi {
     private static instance: UserApi | null = null;
-    private httpInstance: Axios.AxiosInstance;
+    private httpInstance: AxiosInstance;
     private constructor() {
         this.httpInstance = HttpInstanceFactory.getBaseInstance();
     }
