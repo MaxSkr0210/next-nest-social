@@ -1,0 +1,13 @@
+.btn {
+    background-color: #FCE2CE; /* Green */
+    border: none;
+    color: #92613A;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 1.25rem;
+    font-size: 1.5rem;
+    width: 100%;
+    border-radius: 128px;
+    font-weight: 600;
+}

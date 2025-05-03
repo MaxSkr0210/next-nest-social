@@ -1,0 +1,43 @@
+.window {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 8.5rem;
+    position: relative;
+}
+
+.formBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.form {
+    width: 540px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.figure {
+    position: absolute;
+    width: 550px;
+    height: 100%;
+    background: #FCE2CE;
+    border-radius: 394px 394px 0 0;
+    z-index: 0;
+    top: 200px;
+    right: 64px;
+}
+
+.men {
+    position: relative;
+    z-index: 1;
+    right: 74px;
+}
+
+.btn {
+    margin-top: 2rem;
+}
