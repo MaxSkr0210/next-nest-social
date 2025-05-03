@@ -1,7 +1,3 @@
-version: '3.8'
-
-name: social-network
-
 services:
   rabbitmq:
     image: rabbitmq:latest
