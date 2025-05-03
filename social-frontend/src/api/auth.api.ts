@@ -2,10 +2,11 @@ import { HttpInstanceFactory } from '@/utils/HttpInstanceFactory';
 import { IRegistrationInput } from '@/schemas/registration.schema';
 import { IAuthResponse } from '@/types/auth.type';
 import { ILoginInput } from '@/schemas/login.schema';
+import { AxiosInstance } from 'axios';
 
 export class AuthApi {
     private static instance: AuthApi | null = null;
-    private httpInstance: Axios.AxiosInstance;
+    private httpInstance: AxiosInstance;
     private constructor() {
         this.httpInstance = HttpInstanceFactory.getBaseInstance();
     }
