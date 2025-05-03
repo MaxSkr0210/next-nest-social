@@ -23,7 +23,7 @@ export const Registration = () => {
 
         try {
             const user = await authApi.registration(data);
-            localStorage.setItem(ACCESS_TOKEN_KEY, user.access_token);
+            localStorage.setItem(ACCESS_TOKEN_KEY, user.accessToken);
         } catch (error) {
             console.error(error);
         }

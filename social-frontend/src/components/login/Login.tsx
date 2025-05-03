@@ -19,7 +19,7 @@ export const Login = () => {
     const onClickHandler = async (data: ILoginInput) => {
         try {
             const user = await authApi.login(data);
-            localStorage.setItem(ACCESS_TOKEN_KEY, user.access_token);
+            localStorage.setItem(ACCESS_TOKEN_KEY, user.accessToken);
         } catch (e) {
             console.log(e);
         }
