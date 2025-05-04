@@ -5,33 +5,33 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import configuration from '../config/configuration';
 
 @Module({
-  imports: [
-    ClientsModule.register([
-      {
-        name: 'USERS_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: configuration().rabbitmq.urls,
-          queue: 'users_queue',
-          queueOptions: {
-            durable: true,
-          },
-        },
-      },
-      {
-        name: 'AUTH_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: configuration().rabbitmq.urls,
-          queue: 'auth_queue',
-          queueOptions: {
-            durable: true,
-          },
-        },
-      },
-    ]),
-  ],
-  controllers: [AuthController],
-  providers: [AuthService],
+    imports: [
+        ClientsModule.register([
+            {
+                name: 'USERS_SERVICE',
+                transport: Transport.RMQ,
+                options: {
+                    urls: configuration().rabbitmq.urls,
+                    queue: 'users_queue',
+                    queueOptions: {
+                        durable: true,
+                    },
+                },
+            },
+            {
+                name: 'AUTH_SERVICE',
+                transport: Transport.RMQ,
+                options: {
+                    urls: configuration().rabbitmq.urls,
+                    queue: 'auth_queue',
+                    queueOptions: {
+                        durable: true,
+                    },
+                },
+            },
+        ]),
+    ],
+    controllers: [AuthController],
+    providers: [AuthService],
 })
 export class AuthModule {}

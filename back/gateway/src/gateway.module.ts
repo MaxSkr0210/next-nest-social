@@ -6,14 +6,14 @@ import { GatewayService } from './gateway.service';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [configuration],
-    }),
-    AuthModule,
-  ],
-  controllers: [GatewayController],
-  providers: [GatewayService],
+    imports: [
+        ConfigModule.forRoot({
+            isGlobal: true,
+            load: [configuration],
+        }),
+        AuthModule,
+    ],
+    controllers: [GatewayController],
+    providers: [GatewayService],
 })
 export class GatewayModule {}
