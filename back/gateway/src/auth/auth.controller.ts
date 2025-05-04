@@ -92,6 +92,7 @@ export class AuthController {
         httpOnly: cookie.auth.httpOnly,
         secure: cookie.auth.secure,
         maxAge: cookie.auth.maxAge,
+        domain: cookie.auth.domain,
       })
       .json(r);
   }
