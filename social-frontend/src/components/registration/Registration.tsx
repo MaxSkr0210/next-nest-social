@@ -10,9 +10,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthApi } from '@/api/auth.api';
 import { IRegistrationInput, RegistrationSchema } from '@/schemas/registration.schema';
 import { CustomLink } from '@/components/ui/link/link';
-import { ACCESS_TOKEN_KEY } from '@/constants/constatnts';
+import { COOKIE_ACCESS_TOKEN, COOKIE_REFRESH_TOKEN } from '@/constants/constatnts';
+import { useRouter } from 'next/navigation';
+import { EUrl } from '@/constants/urls.constants';
+import { useEffect, useState } from 'react';
 
 export const Registration = () => {
+    const router = useRouter();
+    const [titleText, setTitleText] = useState('');
+
     const { register, handleSubmit } = useForm<IRegistrationInput>({
         resolver: zodResolver(RegistrationSchema),
     });
@@ -23,11 +29,27 @@ export const Registration = () => {
 
         try {
             const user = await authApi.registration(data);
-            localStorage.setItem(ACCESS_TOKEN_KEY, user.accessToken);
+            localStorage.setItem(COOKIE_ACCESS_TOKEN, user.accessToken);
+            localStorage.setItem(COOKIE_REFRESH_TOKEN, user.refreshToken);
+            router.push(EUrl.HOME);
         } catch (error) {
             console.error(error);
         }
     };
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(max-width: 1500px)');
+
+        const handleMediaChange = (e: MediaQueryListEvent | MediaQueryList) => {
+            setTitleText(e.matches ? 'Sign-up' : 'Create Account');
+        };
+
+        handleMediaChange(mediaQuery);
+
+        mediaQuery.addEventListener('change', handleMediaChange);
+
+        return () => mediaQuery.removeEventListener('change', handleMediaChange);
+    }, []);
 
     return (
         <div className={styles.window}>
@@ -42,7 +64,7 @@ export const Registration = () => {
                 />
             </div>
             <div className={styles.formBlock}>
-                <h2>Create Account</h2>
+                <h2 className={styles.title}>{titleText}</h2>
                 <form className={styles.form} onSubmit={handleSubmit(onClickHandler)}>
                     <CustomInput
                         label={'Email'}
@@ -72,7 +94,7 @@ export const Registration = () => {
                 </form>
                 <div>
                     <p className={styles.text}>
-                        Already have an account? <CustomLink>Sign in</CustomLink>
+                        Already have an account? <CustomLink href={EUrl.LOGIN}>Sign in</CustomLink>
                     </p>
                 </div>
             </div>

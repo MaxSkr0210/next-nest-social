@@ -12,9 +12,13 @@ export const CustomInput = ({ type, label, icon, ...props }: IProps) => {
         <label className={cn(styles.label, type === 'email' && styles.emailLabel)}>
             <span className={styles.labelText}>{label}</span>
             {icon && <span className={styles.icon}>{icon()}</span>}
-            {type === 'email' && <span className={styles.emailIcon}></span>}
-            {type === 'password' && <span className={styles.passwordIconLock}></span>}
-            {type === 'password' && <span className={styles.passwordIconShow}></span>}
+            {type === 'email' && <span className={cn(styles.icon, styles.emailIcon)}></span>}
+            {type === 'password' && (
+                <span className={cn(styles.icon, styles.passwordIconLock)}></span>
+            )}
+            {type === 'password' && (
+                <span className={cn(styles.icon, styles.passwordIconShow)}></span>
+            )}
             <input className={styles.input} {...props} type={type || 'text'} />
         </label>
     );

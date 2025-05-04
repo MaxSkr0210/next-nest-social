@@ -15,6 +15,7 @@
     cursor: pointer;
 }
 
+
 .input {
     border: none;
     padding: 1.56rem 1.56rem 1.56rem 3rem;
@@ -24,37 +25,44 @@
     overflow: hidden;
 }
 
-.emailIcon {
+.icon {
     content: '';
     position: absolute;
     top: 50%;
     transform: translate(50%, -50%);
     width: 28px;
     height: 28px;
-    background: url('/images/icons/mail.svg') no-repeat center;
-    background-size: contain;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.emailIcon {
+    background-image: url('/images/icons/mail.svg');
 }
 
 .passwordIconLock {
-    content: '';
-    position: absolute;
-    top: 50%;
-    transform: translate(50%, -50%);
-    width: 28px;
-    height: 28px;
-    background: url('/images/icons/lock-password.svg') no-repeat center;
-    background-size: contain;
+    background-image: url('/images/icons/lock-password.svg');
 }
 
 .passwordIconShow {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 2rem;
-    transform: translate(50%, -50%);
-    width: 28px;
-    height: 28px;
-    background: url('/images/icons/view-off-slash.svg') no-repeat center;
-    background-size: contain;
+    background-image: url('/images/icons/view-off-slash.svg');
     cursor: pointer;
+}
+
+@media screen and (max-width: 1500px) {
+    .input {
+        padding: 1rem 1rem 1rem 2.2rem;
+        font-size: 1rem;
+    }
+
+    .icon {
+        width: 21px;
+        height: 21px;
+    }
+
+    .labelText {
+        font-size: 1.125rem;
+        left: 25px;
+    }
 }

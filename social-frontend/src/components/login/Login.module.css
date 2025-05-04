@@ -8,6 +8,7 @@
 }
 
 .formBlock {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,7 +16,8 @@
 }
 
 .form {
-    width: 540px;
+    max-width: 540px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 48px;
@@ -38,6 +40,88 @@
     right: 74px;
 }
 
-.btn {
-    margin-top: 2rem;
+
+.text {
+    font-size: 1.125rem;
+    color: #553922;
+    text-align: center;
+}
+
+@media screen and (max-width: 1500px) {
+    .window {
+        flex-direction: column;
+        justify-content: normal;
+    }
+
+    .men {
+        left: 27px;
+    }
+
+    .image {
+        width: 250px;
+        height: 250px;
+        position: relative;
+        top: 85px;
+        left: auto;
+    }
+
+    .figure {
+        transform: rotate(180deg);
+        right: auto;
+        top: 0;
+        height: 315px;
+    }
+
+    .title {
+        font-family: 'Lufga Regular';
+        position: absolute;
+        top: 10px;
+        z-index: 1;
+    }
+
+    .formBlock {
+        order: 3;
+        margin-top: 40px;
+    }
+
+    .form{
+        gap: 30px;
+        margin-top: 60px;
+    }
+
+    .btn {
+        width: fit-content;
+        align-self: center;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .window {
+        padding-inline: 2rem;
+    }
+
+    .men {
+        left: 0;
+    }
+
+
+    .figure {
+        transform: rotate(180deg);
+        left: auto;
+        top: 0;
+        height: 315px;
+        width: 100%;
+        border-radius: 150px 150px 0 0;
+    }
+
+    .title {
+        font-family: 'Lufga Regular';
+        position: absolute;
+        top: 10px;
+    }
+
+    .form{
+        gap: 30px;
+        margin-top: 60px;
+    }
 }
