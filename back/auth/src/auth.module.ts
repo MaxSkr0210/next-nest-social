@@ -8,36 +8,36 @@ import { Token } from './entities/token.entity';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
-  imports: [
-    JwtModule.register({
-      global: true,
-    }),
-    ClientsModule.register([
-      {
-        name: 'USERS_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: configuration().rabbitmq.urls,
-          queue: 'users_queue',
-          queueOptions: {
-            durable: true,
-          },
-        },
-      },
-    ]),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: configuration().database.host,
-      port: configuration().database.port,
-      username: configuration().database.username,
-      password: configuration().database.password,
-      database: configuration().database.name,
-      entities: [Token],
-      synchronize: true,
-    }),
-    TypeOrmModule.forFeature([Token]),
-  ],
-  controllers: [AuthController],
-  providers: [AuthService],
+    imports: [
+        JwtModule.register({
+            global: true,
+        }),
+        ClientsModule.register([
+            {
+                name: 'USERS_SERVICE',
+                transport: Transport.RMQ,
+                options: {
+                    urls: configuration().rabbitmq.urls,
+                    queue: 'users_queue',
+                    queueOptions: {
+                        durable: true,
+                    },
+                },
+            },
+        ]),
+        TypeOrmModule.forRoot({
+            type: 'postgres',
+            host: configuration().database.host,
+            port: configuration().database.port,
+            username: configuration().database.username,
+            password: configuration().database.password,
+            database: configuration().database.name,
+            entities: [Token],
+            synchronize: true,
+        }),
+        TypeOrmModule.forFeature([Token]),
+    ],
+    controllers: [AuthController],
+    providers: [AuthService],
 })
 export class AuthModule {}

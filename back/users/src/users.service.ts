@@ -7,43 +7,43 @@ import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
-  ) {}
+    constructor(
+        @InjectRepository(User)
+        private userRepository: Repository<User>,
+    ) {}
 
-  async createUser(user: CreateUserDto): Promise<Omit<User, 'password'>> {
-    const u = await this.findUserByFields({
-      email: user.email,
-    });
+    async createUser(user: CreateUserDto): Promise<Omit<User, 'password'>> {
+        const u = await this.findUserByFields({
+            email: user.email,
+        });
 
-    if (u) {
-      throw new Error('User already exists');
+        if (u) {
+            throw new Error('User already exists');
+        }
+
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+
+        const newUser = await this.userRepository.save({
+            ...user,
+            password: hashedPassword,
+        });
+
+        const { password, ...userWithoutPassword } = newUser;
+        return userWithoutPassword;
     }
 
-    const hashedPassword = await bcrypt.hash(user.password, 10);
+    async findUserByFields(fields: Partial<Omit<User, 'id'>>): Promise<User> {
+        const user = await this.userRepository.findOne({
+            where: fields,
+            select: {
+                id: true,
+                username: true,
+                email: true,
+            },
+        });
 
-    const newUser = await this.userRepository.save({
-      ...user,
-      password: hashedPassword,
-    });
+        console.log(user);
 
-    const { password, ...userWithoutPassword } = newUser;
-    return userWithoutPassword;
-  }
-
-  async findUserByFields(fields: Partial<Omit<User, 'id'>>): Promise<User> {
-    const user = await this.userRepository.findOne({
-      where: fields,
-      select: {
-        id: true,
-        username: true,
-        email: true,
-      },
-    });
-
-    console.log(user);
-
-    return user;
-  }
+        return user;
+    }
 }
