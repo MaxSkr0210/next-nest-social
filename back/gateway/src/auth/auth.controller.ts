@@ -30,10 +30,17 @@ export class AuthController {
     );
 
     res
-      .cookie(cookie.auth.name, register.refreshToken, {
-        httpOnly: cookie.auth.httpOnly,
-        secure: cookie.auth.secure,
-        maxAge: cookie.auth.maxAge,
+      .cookie(cookie.refreshToken.name, register.refreshToken, {
+        httpOnly: cookie.refreshToken.httpOnly,
+        secure: cookie.refreshToken.secure,
+        maxAge: cookie.refreshToken.maxAge,
+        domain: cookie.refreshToken.domain,
+      })
+      .cookie(cookie.accessToken.name, register.accessToken, {
+        httpOnly: cookie.accessToken.httpOnly,
+        secure: cookie.accessToken.secure,
+        maxAge: cookie.accessToken.maxAge,
+        domain: cookie.accessToken.domain,
       })
       .json(register);
   }
@@ -62,11 +69,17 @@ export class AuthController {
     );
 
     res
-      .cookie(cookie.auth.name, register.refreshToken, {
-        httpOnly: cookie.auth.httpOnly,
-        secure: cookie.auth.secure,
-        maxAge: cookie.auth.maxAge,
-        domain: cookie.auth.domain,
+      .cookie(cookie.refreshToken.name, register.refreshToken, {
+        httpOnly: cookie.refreshToken.httpOnly,
+        secure: cookie.refreshToken.secure,
+        maxAge: cookie.refreshToken.maxAge,
+        domain: cookie.refreshToken.domain,
+      })
+      .cookie(cookie.accessToken.name, register.accessToken, {
+        httpOnly: cookie.accessToken.httpOnly,
+        secure: cookie.accessToken.secure,
+        maxAge: cookie.accessToken.maxAge,
+        domain: cookie.accessToken.domain,
       })
       .json(register);
   }
@@ -89,11 +102,17 @@ export class AuthController {
     }
 
     res
-      .cookie(cookie.auth.name, r.refreshToken, {
-        httpOnly: cookie.auth.httpOnly,
-        secure: cookie.auth.secure,
-        maxAge: cookie.auth.maxAge,
-        domain: cookie.auth.domain,
+      .cookie(cookie.refreshToken.name, r.refreshToken, {
+        httpOnly: cookie.refreshToken.httpOnly,
+        secure: cookie.refreshToken.secure,
+        maxAge: cookie.refreshToken.maxAge,
+        domain: cookie.refreshToken.domain,
+      })
+      .cookie(cookie.accessToken.name, r.accessToken, {
+        httpOnly: cookie.accessToken.httpOnly,
+        secure: cookie.accessToken.secure,
+        maxAge: cookie.accessToken.maxAge,
+        domain: cookie.accessToken.domain,
       })
       .json(r);
   }
