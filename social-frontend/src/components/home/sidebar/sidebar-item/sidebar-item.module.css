@@ -1,0 +1,26 @@
+.sidebarItem {
+    display: grid;
+    grid-template-columns: auto auto;
+    border-bottom: 1px solid silver;
+    padding-block: 0.5rem;
+    cursor: pointer;
+}
+
+.sidebarItem:last-child {
+  border-bottom: none;
+}
+
+.sidebarItem:hover {
+  background-color: var(--color-sidebar-item-hover);
+}
+
+.userIcon {
+  align-self: center;
+}
+
+.chatInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+}
