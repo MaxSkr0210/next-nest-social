@@ -8,29 +8,39 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthApi } from '@/api/auth.api';
 import { ILoginInput, LoginSchema } from '@/schemas/login.schema';
-import { COOKIE_ACCESS_TOKEN, COOKIE_REFRESH_TOKEN } from '@/constants/constatnts';
-import { EUrl } from '@/constants/urls.constants';
+import { EUrl } from '@/constants';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CustomLink } from '@/components/ui/link/link';
+import { isAxiosError } from 'axios';
+import { ErrorMessage } from '@/components/ui/errorMessage/errorMessage';
 
 export const Login = () => {
     const router = useRouter();
     const [titleText, setTitleText] = useState('');
 
-    const { register, handleSubmit } = useForm<ILoginInput>({
+    const {
+        register,
+        handleSubmit,
+        setError,
+        formState: { errors },
+    } = useForm<ILoginInput>({
         resolver: zodResolver(LoginSchema),
     });
     const authApi = AuthApi.getInstance();
 
     const onClickHandler = async (data: ILoginInput) => {
         try {
-            const user = await authApi.login(data);
-            localStorage.setItem(COOKIE_ACCESS_TOKEN, user.accessToken);
-            localStorage.setItem(COOKIE_REFRESH_TOKEN, user.refreshToken);
+            await authApi.login(data);
             router.push(EUrl.HOME);
-        } catch (e) {
-            console.log(e);
+        } catch (error) {
+            if (isAxiosError(error)) {
+                if (error.status === 404) {
+                    setError('email', {
+                        message: error.response!.data.message,
+                    });
+                }
+            }
         }
     };
 
@@ -67,6 +77,7 @@ export const Login = () => {
                     />
                     <CustomButton className={styles.btn}>Login</CustomButton>
                 </form>
+                <ErrorMessage error={errors.email?.message || errors.password?.message} />
                 <p className={styles.text}>
                     Don’t have an account? <CustomLink href={EUrl.REGISTER}>Sign up</CustomLink>
                 </p>

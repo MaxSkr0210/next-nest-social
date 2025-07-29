@@ -1,4 +1,4 @@
-import { IUser } from '@/types/user.type';
+import { IUser } from '@/types';
 
 export interface IAuthResponse {
     accessToken: string;

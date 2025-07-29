@@ -1,6 +1,6 @@
 import { HttpInstanceFactory } from '@/utils/HttpInstanceFactory';
 import { IRegistrationInput } from '@/schemas/registration.schema';
-import { IAuthResponse } from '@/types/auth.type';
+import { IAuthResponse } from '@/types';
 import { ILoginInput } from '@/schemas/login.schema';
 import { AxiosInstance } from 'axios';
 

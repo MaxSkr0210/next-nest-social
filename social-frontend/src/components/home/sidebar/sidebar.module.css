@@ -1,0 +1,14 @@
+.sidebar {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    padding: 1.25rem;
+    border-right: 1px solid silver;
+}
+
+.chats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow-y: auto;
+}

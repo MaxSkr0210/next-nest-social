@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { COOKIE_REFRESH_TOKEN } from '@/constants/constatnts';
-import { EUrl, NO_AUTH_URL } from '@/constants/urls.constants';
+import { EUrl, NO_AUTH_URL, COOKIE_REFRESH_TOKEN } from '@/constants';
 import axios, { isAxiosError } from 'axios';
-import { IAuthResponse } from '@/types/auth.type';
+import { IAuthResponse } from '@/types';
 
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;

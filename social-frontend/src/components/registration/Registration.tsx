@@ -10,16 +10,23 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthApi } from '@/api/auth.api';
 import { IRegistrationInput, RegistrationSchema } from '@/schemas/registration.schema';
 import { CustomLink } from '@/components/ui/link/link';
-import { COOKIE_ACCESS_TOKEN, COOKIE_REFRESH_TOKEN } from '@/constants/constatnts';
 import { useRouter } from 'next/navigation';
-import { EUrl } from '@/constants/urls.constants';
+import { EUrl } from '@/constants';
 import { useEffect, useState } from 'react';
+import { ErrorMessage } from '@/components/ui/errorMessage/errorMessage';
+import { isAxiosError } from 'axios';
 
 export const Registration = () => {
     const router = useRouter();
     const [titleText, setTitleText] = useState('');
 
-    const { register, handleSubmit } = useForm<IRegistrationInput>({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        setError,
+        getValues,
+    } = useForm<IRegistrationInput>({
         resolver: zodResolver(RegistrationSchema),
     });
     const authApi = AuthApi.getInstance();
@@ -28,12 +35,22 @@ export const Registration = () => {
         if (data.password !== data.rePassword) return;
 
         try {
-            const user = await authApi.registration(data);
-            localStorage.setItem(COOKIE_ACCESS_TOKEN, user.accessToken);
-            localStorage.setItem(COOKIE_REFRESH_TOKEN, user.refreshToken);
+            await authApi.registration(data);
             router.push(EUrl.HOME);
         } catch (error) {
-            console.error(error);
+            if (isAxiosError(error)) {
+                if (error.status === 409) {
+                    if (error.response!.data.message.includes('username')) {
+                        setError('username', {
+                            message: error.response!.data.message,
+                        });
+                    } else if (error.response!.data.message.includes('email')) {
+                        setError('email', {
+                            message: error.response!.data.message,
+                        });
+                    }
+                }
+            }
         }
     };
 
@@ -70,28 +87,48 @@ export const Registration = () => {
                         label={'Email'}
                         type={'email'}
                         placeholder={'email@gmail.com'}
-                        {...register('email')}
+                        {...register('email', {
+                            required: true,
+                        })}
                     />
                     <CustomInput
                         label={'Username'}
                         placeholder={'Enter your username'}
                         icon={UserIcon}
-                        {...register('username')}
+                        {...register('username', {
+                            required: true,
+                        })}
                     />
                     <CustomInput
                         label={'Password'}
                         type={'password'}
                         placeholder={'Enter your password'}
-                        {...register('password')}
+                        {...register('password', {
+                            required: true,
+                        })}
                     />
                     <CustomInput
                         label={'Password'}
                         type={'password'}
                         placeholder={'Repeat your password'}
-                        {...register('rePassword')}
+                        {...register('rePassword', {
+                            required: true,
+                            validate: match => {
+                                const password = getValues('password');
+                                return match === password || 'Passwords should match!';
+                            },
+                        })}
                     />
                     <CustomButton className={styles.btn}>Create Account</CustomButton>
                 </form>
+                <ErrorMessage
+                    error={
+                        errors.email?.message ||
+                        errors.username?.message ||
+                        errors.password?.message ||
+                        errors.rePassword?.message
+                    }
+                />
                 <div>
                     <p className={styles.text}>
                         Already have an account? <CustomLink href={EUrl.LOGIN}>Sign in</CustomLink>

@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { COOKIE_REFRESH_TOKEN } from '@/constants/constatnts';
+import { COOKIE_REFRESH_TOKEN } from '@/constants';
 import axios, { AxiosInstance } from 'axios';
 
 const backend_url = process.env.NEXT_PUBLIC_BACKEND_API_URL;
